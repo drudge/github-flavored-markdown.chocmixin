@@ -1,6 +1,6 @@
 # Github Flavored Markdown Preview mixin for Chocolat
 
-This mixin adds a markdown preview action for Github flavored markdown in Chocolat.
+This mixin adds a markdown preview action for Github flavored markdown in [Chocolat](http://chocolatapp.com).
 
 ## Requirements
 
