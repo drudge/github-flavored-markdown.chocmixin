@@ -1,0 +1,21 @@
+{
+  "name": "github-flavored-markdown",
+  "version": "1.1.0",
+  "description": "Github Flavored Markdown Preview for Chocolat",
+  "main": "init.js",
+  "dependencies": {
+    "github-flavored-markdown": "~1.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drudge/github-flavored-markdown.chocmixin.git"
+  },
+  "keywords": [
+    "github",
+    "markdown",
+    "preview",
+    "bootstrap"
+  ],
+  "author": "Nicholas Penree <nick@penree.com>",
+  "license": "MIT"
+}
