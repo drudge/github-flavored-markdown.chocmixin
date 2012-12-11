@@ -9,6 +9,24 @@
  */
 
 var ghm = require("github-flavored-markdown")
+  , request = require('request');
+
+function getMarkdown(text, cb) {
+  request({
+      url: 'https://api.github.com/markdown/raw'
+    , method: 'POST'
+    , headers: {
+        'Content-Type': 'text/x-markdown'
+      }
+    , body: text
+  }, function(err, r, body) {
+    if (err || r.statusCode !== 200 || !body) {
+      body = ghm.parse(text);
+    }
+    
+    cb(body);
+  });
+}
 
 /**
 * Hook up menu items.
@@ -30,14 +48,14 @@ Hooks.addMenuItem('Actions/Markdown/Preview Github Flavored Markdown', 'cmd-alt-
   win.htmlPath = "preview.html";
   win.run();
   
-  html = ghm.parse(doc.text);
-  
-  if (html) {
-    win.applyFunction(function (data) { 
-      document.body.innerHTML = data;
-    }, [html]);
-  }
-  
-  win.setFrame({x: 0, y: 0, width: 750, height: 750}, false);
-  win.center();
+  getMarkdown(doc.text, function(html) {    
+    if (html) {
+      win.applyFunction(function (data) { 
+        document.body.innerHTML = data;
+      }, [html]);
+    }
+    
+    win.setFrame({x: 0, y: 0, width: 750, height: 750}, false);
+    win.center();
+  });
 });

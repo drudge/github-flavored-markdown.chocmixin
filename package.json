@@ -4,7 +4,8 @@
   "description": "Github Flavored Markdown Preview for Chocolat",
   "main": "init.js",
   "dependencies": {
-    "github-flavored-markdown": "~1.0.1"
+    "github-flavored-markdown": "~1.0.1",
+    "request": "~2.12.0"
   },
   "repository": {
     "type": "git",
