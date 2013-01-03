@@ -38,24 +38,58 @@ Hooks.addMenuItem('Actions/Markdown/Preview Github Flavored Markdown', 'cmd-alt-
   var doc = Document.current()
     , win = new Window()
     , html = "";
-    
+
   if (doc.rootScope() !== 'html.markdown.text') {
     Alert.beep();
     return;
   }
-  
+
   win.title = doc.displayName();
   win.htmlPath = "preview.html";
   win.run();
-  
+
   getMarkdown(doc.text, function(html) {    
     if (html) {
       win.applyFunction(function (data) { 
         document.body.innerHTML = data;
       }, [html]);
     }
-    
+
     win.setFrame({x: 0, y: 0, width: 750, height: 750}, false);
     win.center();
+  });
+});
+
+Hooks.addMenuItem('Actions/Markdown/Convert Github Flavored Markdown to HTML', 'cmd-alt-shift-p', function() {
+  var doc = Document.current();
+  
+  if (doc.rootScope() !== 'html.markdown.text') {
+    Alert.beep();
+    return;
+  }
+  
+  getMarkdown(doc.text, function(html) {    
+    if (!html) {
+      Alert.beep();
+      return;
+    }
+    
+    Document.open(null, MainWindow, function(newdoc) {
+      if (typeof newdoc === 'string') {
+        newdoc = new Document(newdoc);
+      }
+      
+      try {
+        var editors = newdoc.editors();
+        
+        if (editors.length) {
+          Recipe.runOn(editors[0], function(r) {
+            r.text = html;
+          });
+        }
+      } catch (err) {
+        Alert.beep();
+      }
+    });
   });
 });
